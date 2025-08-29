@@ -5,54 +5,124 @@ Olá! 👋 Sou Livia Galdino
 
 # 📋 Lista de Tarefas (To-Do List)
 
-
-Este é meu projeto simples de **Lista de Tarefas**, desenvolvido para treinar conceitos fundamentais de **React** e front-end.
-
----
-
-## 🚀 Sobre o projeto
-Aplicação web que permite ao usuário adicionar tarefas, marcar como concluídas e removê-las. Além disso, exibe a quantidade de tarefas pendentes.  
-Esse foi meu **primeiro projeto organizado em componentes**, com foco em aplicar boas práticas de desenvolvimento.
+Aplicação web simples em **HTML, CSS e JavaScript** que permite ao usuário visualizar uma lista de tarefas, marcar como concluídas e removê-las.  
+O foco é treinar conceitos de **JavaScript para front-end**, como manipulação do DOM e lógica de programação.
 
 ---
 
-## 🛠 Tecnologias utilizadas
-- **React**
+## 🚀 Funcionalidades
+
+- Marcar tarefas como concluídas clicando sobre elas;  
+- Remover tarefas da lista;  
+- Lista inicial de tarefas predefinidas;  
+- Interface simples e intuitiva.  
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+- **HTML5**  
+- **CSS3**  
 - **JavaScript (ES6+)**
-- **HTML5**
-- **CSS3**
 
 ---
 
 ## 📚 O que aprendi
-- **Gerenciamento de Estado:** uso do `useState` para controlar os dados da aplicação;  
-- **Componentização:** separação da interface em componentes (`InputTarefa`, `ListaTarefas`, `ItemTarefa`);  
-- **Props:** passagem de dados e funções entre componentes (pai → filho);  
-- **Renderização Condicional:** exibição de mensagens e elementos da UI de acordo com o estado da aplicação.  
 
----
+- **Manipulação do DOM:** criar, atualizar e remover elementos dinamicamente;  
+- **Eventos:** usar `onclick` para interação com a lista;  
+- **Arrays e objetos:** armazenar tarefas como objetos em um array;  
+- **Renderização Condicional:** alterar a aparência das tarefas concluídas (`text-decoration: line-through`);  
+- **Estilização básica:** aplicar CSS para deixar a lista visualmente agradável.
 
-## ⚡ Funcionalidades
-- Adicionar novas tarefas;  
-- Marcar tarefas como concluídas;  
-- Remover tarefas da lista;  
-- Contador de tarefas pendentes;  
-- Interface simples e intuitiva.
+▶️  executar o projeto
 
----
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Tarefas</title>
+  <style>
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    li span {
+      cursor: pointer;
+    }
+    li button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .concluida {
+      text-decoration: line-through;
+    }
+    .assinatura {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
 
-## ▶️ Como executar o projeto
-```bash
-# Clone este repositório
-git clone https://github.com/seuusuario/lista-tarefas.git
+  <ul id="listaTarefas"></ul>
 
-# Acesse a pasta do projeto
-cd lista-tarefas
+  <div class="assinatura">Livia Galdino</div>
 
-# Instale as dependências
-npm install
+  <script>
+    const tarefas = [
+      { id: 1, texto: 'Aprender HTML', concluida: false },
+      { id: 2, texto: 'Aprender CSS', concluida: false },
+      { id: 3, texto: 'Aprender JavaScript', concluida: false },
+      { id: 4, texto: 'Aprender Inglês', concluida: false },
+      { id: 5, texto: 'Aprender Francês', concluida: false }
+    ];
 
-# Execute a aplicação
-npm start
+    function renderizarTarefas() {
+      const lista = document.getElementById('listaTarefas');
+      lista.innerHTML = '';
 
--->
+      tarefas.forEach(tarefa => {
+        const li = document.createElement('li');
+
+        const span = document.createElement('span');
+        span.textContent = tarefa.texto;
+        if (tarefa.concluida) span.classList.add('concluida');
+        span.onclick = () => {
+          tarefa.concluida = !tarefa.concluida;
+          renderizarTarefas();
+        };
+
+        const button = document.createElement('button');
+        button.textContent = 'X';
+        button.onclick = () => {
+          const index = tarefas.findIndex(t => t.id === tarefa.id);
+          tarefas.splice(index, 1);
+          renderizarTarefas();
+        };
+
+        li.appendChild(span);
+        li.appendChild(button);
+        lista.appendChild(li);
+      });
+    }
+
+    renderizarTarefas();
+  </script>
+
+</body>
+</html>
